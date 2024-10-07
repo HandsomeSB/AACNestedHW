@@ -179,6 +179,13 @@ public class AACMappings implements AACPage {
 	 */
 	public void addItem(String imageLoc, String text) {
 		this.currentCategory.addItem(imageLoc, text);
+		if(this.currentCategory == this.home) { 
+			try {
+				this.categories.set(text, new AACCategory(text));
+			} catch (Exception e) {
+				// TODO: handle exception
+			} // try/catch
+		} // if home
 	}
 
 
@@ -189,6 +196,19 @@ public class AACMappings implements AACPage {
 	 */
 	public String getCategory() {
 		return this.currentCategory.getCategory();
+	}
+
+	/**
+	 * Given an image, it will return true if it is a category image and false otherwise.
+	 * @return
+	 */
+	public boolean isCategory(String imgLoc) { 
+		try {
+			this.home.select(imgLoc);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 
