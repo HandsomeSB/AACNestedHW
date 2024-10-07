@@ -153,7 +153,22 @@ public class AACMappings implements AACPage {
 	 * AAC mapping to
 	 */
 	public void writeToFile(String filename) {
-		
+		// for every itemName in home
+		//		print(loc + categoryname)
+		//		go into that category and print everything out
+		String[] categoryImgLocs = home.getImageLocs();
+		for(String loc : categoryImgLocs) { 
+			try {
+				AACCategory category = this.categories.get(home.select(loc));
+				System.out.println(loc + " " + category.getCategory()); //STUB
+				for(String itemLoc : category.getImageLocs()) {
+					System.out.println(">" + itemLoc + " " + category.select(itemLoc)); //STUB
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 	}
 	
 	/**
