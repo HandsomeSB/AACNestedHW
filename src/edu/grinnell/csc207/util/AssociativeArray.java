@@ -211,4 +211,18 @@ public class AssociativeArray<K, V> {
     }
     return ret;
   }
+
+  /**
+   * returns the list of values
+   * 
+   * @return List of values
+   */
+  @SuppressWarnings("unchecked")
+  public V[] values(Class<V> clazz){
+    V[] ret = (V[]) newInstance(clazz, size);
+    for (int i = 0; i < size; ++i) {
+      ret[i] = this.pairs[i].val;
+    }
+    return ret;
+  }
 } // class AssociativeArray
