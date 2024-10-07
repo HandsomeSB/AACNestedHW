@@ -58,8 +58,8 @@ public class AACCategory implements AACPage {
 	public String select(String imageLoc) throws NoSuchElementException{
 		try { 
 			return this.locNamePairs.get(imageLoc);
-		} catch {
-			return new NoSuchElementException();
+		} catch (NoSuchElementException e) {
+			throw e;
 		}
 	}
 

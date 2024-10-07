@@ -205,7 +205,7 @@ public class AssociativeArray<K, V> {
    */
   K[] keys(){
     @SuppressWarnings("unchecked")
-    K[] ret = (K[]) new Object(size);
+    K[] ret = (K[]) (new Object[size]);
     for (int i = 0; i < size; ++i) {
       ret[i] = this.pairs[i].key;
     }

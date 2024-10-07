@@ -86,8 +86,8 @@ public class AACMappings implements AACPage {
 			} else { 
 				return text;
 			}
-		} catch { 
-			return new NoSuchElementException();
+		} catch (NoSuchElementException e){ 
+			throw e;
 		}
 	}
 	
