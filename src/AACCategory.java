@@ -10,7 +10,8 @@ import edu.grinnell.csc207.util.AssociativeArray;
  */
 public class AACCategory implements AACPage {
 	String name;
-	AssociativeArray locNamePairs;
+	/** associative array of image location and item name */
+	AssociativeArray<String, String> locNamePairs;
 
 	
 	/**
@@ -28,7 +29,12 @@ public class AACCategory implements AACPage {
 	 * @param text the text that image should speak
 	 */
 	public void addItem(String imageLoc, String text) {
-		this.locNamePairs.set(imageLoc, text);
+		try {
+			this.locNamePairs.set(imageLoc, text);
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 	/**
@@ -37,7 +43,7 @@ public class AACCategory implements AACPage {
 	 * it should return an empty array
 	 */
 	public String[] getImageLocs() {
-		return this.locNamePairs.keys();
+		return this.locNamePairs.keys(String.class);
 	}
 
 	/**
@@ -58,8 +64,8 @@ public class AACCategory implements AACPage {
 	public String select(String imageLoc) throws NoSuchElementException{
 		try { 
 			return this.locNamePairs.get(imageLoc);
-		} catch (NoSuchElementException e) {
-			throw e;
+		} catch (Exception e) {
+			throw new NoSuchElementException();
 		}
 	}
 
@@ -70,5 +76,9 @@ public class AACCategory implements AACPage {
 	 */
 	public boolean hasImage(String imageLoc) {
 		return this.locNamePairs.hasKey(imageLoc);
+	}
+
+	public String toString() { 
+		return this.name + " : " + this.locNamePairs.toString();
 	}
 }

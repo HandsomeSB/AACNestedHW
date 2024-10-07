@@ -203,9 +203,9 @@ public class AssociativeArray<K, V> {
    * 
    * @return List of keys
    */
-  K[] keys(){
-    @SuppressWarnings("unchecked")
-    K[] ret = (K[]) (new Object[size]);
+  @SuppressWarnings("unchecked")
+  public K[] keys(Class<K> clazz){
+    K[] ret = (K[]) newInstance(clazz, size);
     for (int i = 0; i < size; ++i) {
       ret[i] = this.pairs[i].key;
     }

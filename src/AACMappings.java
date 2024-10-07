@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import edu.grinnell.csc207.util.AssociativeArray;
+import java.util.NoSuchElementException;
 
 /**
  * Creates a set of mappings of an AAC that has two levels,
@@ -15,8 +17,9 @@ import java.util.Scanner;
  */
 public class AACMappings implements AACPage {
 
-	private AssociativeArray categories = new AssociativeArray<String, AACCategory>();
+	private AssociativeArray<String, AACCategory> categories = new AssociativeArray<String, AACCategory>();
 	private AACCategory currentCategory;
+	private final AACCategory home;
 	
 	/**
 	 * Creates a set of mappings for the AAC based on the provided
@@ -39,23 +42,43 @@ public class AACMappings implements AACPage {
 	 * @param filename the name of the file that stores the mapping information
 	 */
 	public AACMappings(String filename) {
-		this.categories.set("", new AACCategory(""));
-		AACCategory home = this.categories.get("");
-
+		this.home = new AACCategory("");
+		try {
+			this.categories.set("", this.home);
+		} catch (Exception e) {
+			// Do nothing
+		}
+		
 		try (Scanner scanner = new Scanner(new File(filename))) {
+			AACCategory newCategory = home; // pointer to constructing category
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine(); // Read the next line
                 String[] split = line.split(" ", 2);
-				AACCategory newCategory;
 
-				if(line.charAt(0) == '>') { 
-					split[0] = split[0].split(">")[0];
+				if(line.charAt(0) == '>') { // add new item in category
+					split[0] = split[0].substring(1);
 					newCategory.addItem(split[0], split[1]);
-				} else { 
+				} else {  // add new category
 					newCategory = new AACCategory(split[1]);
-					this.categories.set(newCategory.getCategory(), newCategory);
+					try {
+						this.categories.set(newCategory.getCategory(), newCategory);
+						this.home.addItem(split[0], split[1]);
+					} catch (Exception e) {
+
+					}
 				}
             }
+
+			// Test
+			for(String k :categories.keys(String.class)) { 
+				try {
+					System.out.println(categories.get(k).toString());
+				} catch (Exception e) {
+					System.out.println(k + " not found");
+				}
+				
+			}
+
         } catch (FileNotFoundException e) {
             e.printStackTrace(); // Handle file not found exception
         }
@@ -80,14 +103,14 @@ public class AACMappings implements AACPage {
 	public String select(String imageLoc) throws NoSuchElementException {
 		try { 
 			String text = this.currentCategory.select(imageLoc);
-			if(this.currentCategory.getCategory().equals("")) { 
+			if(this.currentCategory.getCategory().equals("")) { //if currently at home
 				this.currentCategory = this.categories.get(text);
 				return "";
 			} else { 
 				return text;
 			}
-		} catch (NoSuchElementException e){ 
-			throw e;
+		} catch (Exception e){ 
+			throw new NoSuchElementException();
 		}
 	}
 	
@@ -105,7 +128,7 @@ public class AACMappings implements AACPage {
 	 * category
 	 */
 	public void reset() {
-		this.currentCategory = this.categories.get("");
+		this.currentCategory = this.home;
 	}
 	
 	
