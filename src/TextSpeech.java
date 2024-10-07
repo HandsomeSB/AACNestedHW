@@ -5,7 +5,11 @@ import java.util.Locale;
 import javax.speech.Central;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
-  
+
+/**
+ * java -cp '/Users/yiyunzhu/Developer/CSC207/AACNestedHW/lib/freetts-1.2/lib/*' TextSpeech.java
+ * java -cp '/Users/yiyunzhu/Developer/CSC207/AACNestedHW/lib/freetts-1.2/lib/*:.' TextSpeech
+ */
 public class TextSpeech {
   
     public static void main(String[] args)

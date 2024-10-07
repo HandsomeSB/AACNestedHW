@@ -1,4 +1,5 @@
 import java.util.NoSuchElementException;
+import edu.grinnell.csc207.util.AssociativeArray;
 
 /**
  * Represents the mappings for a single category of items that should
@@ -8,6 +9,8 @@ import java.util.NoSuchElementException;
  *
  */
 public class AACCategory implements AACPage {
+	String name;
+	AssociativeArray locNamePairs;
 
 	
 	/**
@@ -15,7 +18,8 @@ public class AACCategory implements AACPage {
 	 * @param name the name of the category
 	 */
 	public AACCategory(String name) {
-
+		this.name = name;
+		this.locNamePairs = new AssociativeArray<String, String>();
 	}
 	
 	/**
@@ -24,7 +28,7 @@ public class AACCategory implements AACPage {
 	 * @param text the text that image should speak
 	 */
 	public void addItem(String imageLoc, String text) {
-
+		this.locNamePairs.set(imageLoc, text);
 	}
 
 	/**
@@ -33,7 +37,7 @@ public class AACCategory implements AACPage {
 	 * it should return an empty array
 	 */
 	public String[] getImageLocs() {
-		return null;
+		return this.locNamePairs.keys();
 	}
 
 	/**
@@ -41,7 +45,7 @@ public class AACCategory implements AACPage {
 	 * @return the name of the category
 	 */
 	public String getCategory() {
-		return "";
+		return this.name;
 	}
 
 	/**
@@ -51,8 +55,12 @@ public class AACCategory implements AACPage {
 	 * @throws NoSuchElementException if the image provided is not in the current
 	 * 		   category
 	 */
-	public String select(String imageLoc) {
-		return "";
+	public String select(String imageLoc) throws NoSuchElementException{
+		try { 
+			return this.locNamePairs.get(imageLoc);
+		} catch {
+			return new NoSuchElementException();
+		}
 	}
 
 	/**
@@ -61,6 +69,6 @@ public class AACCategory implements AACPage {
 	 * @return true if it is in the category, false otherwise
 	 */
 	public boolean hasImage(String imageLoc) {
-		return false;
+		return this.locNamePairs.hasKey(imageLoc);
 	}
 }

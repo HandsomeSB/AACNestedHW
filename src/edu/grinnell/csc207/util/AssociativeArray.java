@@ -197,4 +197,18 @@ public class AssociativeArray<K, V> {
     } // for
     throw new KeyNotFoundException();
   } // find(K)
+
+  /**
+   * returns the list of keys
+   * 
+   * @return List of keys
+   */
+  K[] keys(){
+    @SuppressWarnings("unchecked")
+    K[] ret = (K[]) new Object(size);
+    for (int i = 0; i < size; ++i) {
+      ret[i] = this.pairs[i].key;
+    }
+    return ret;
+  }
 } // class AssociativeArray
