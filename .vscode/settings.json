@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "lib/freetts-1.2/lib",
+        "src"
+    ]
+}

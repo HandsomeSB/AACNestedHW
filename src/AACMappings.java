@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import edu.grinnell.csc207.util.AssociativeArray;
 import java.util.NoSuchElementException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Creates a set of mappings of an AAC that has two levels,
@@ -12,7 +15,7 @@ import java.util.NoSuchElementException;
  * and updating the set of images that would be shown and handling
  * an interactions.
  * 
- * @author Catie Baker & YOUR NAME HERE
+ * @author Catie Baker & Harrison Zhu
  *
  */
 public class AACMappings implements AACPage {
@@ -54,7 +57,7 @@ public class AACMappings implements AACPage {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine(); // Read the next line
                 String[] split = line.split(" ", 2);
-
+				if(line.length() == 0) continue;
 				if(line.charAt(0) == '>') { // add new item in category
 					split[0] = split[0].substring(1);
 					newCategory.addItem(split[0], split[1]);
@@ -68,16 +71,6 @@ public class AACMappings implements AACPage {
 					}
 				}
             }
-
-			// Test
-			for(String k :categories.keys(String.class)) { 
-				try {
-					System.out.println(categories.get(k).toString());
-				} catch (Exception e) {
-					System.out.println(k + " not found");
-				}
-				
-			}
 
         } catch (FileNotFoundException e) {
             e.printStackTrace(); // Handle file not found exception
@@ -153,19 +146,16 @@ public class AACMappings implements AACPage {
 	 * AAC mapping to
 	 */
 	public void writeToFile(String filename) {
-		// for every itemName in home
-		//		print(loc + categoryname)
-		//		go into that category and print everything out
 		String[] categoryImgLocs = home.getImageLocs();
 		for(String loc : categoryImgLocs) { 
-			try {
+			try (PrintWriter writer = new PrintWriter(new FileWriter(filename))){
 				AACCategory category = this.categories.get(home.select(loc));
-				System.out.println(loc + " " + category.getCategory()); //STUB
+				writer.println(loc + " " + category.getCategory());
 				for(String itemLoc : category.getImageLocs()) {
-					System.out.println(">" + itemLoc + " " + category.select(itemLoc)); //STUB
+					writer.println(">" + itemLoc + " " + category.select(itemLoc));
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
 
@@ -183,7 +173,7 @@ public class AACMappings implements AACPage {
 			try {
 				this.categories.set(text, new AACCategory(text));
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			} // try/catch
 		} // if home
 	}
