@@ -147,16 +147,16 @@ public class AACMappings implements AACPage {
 	 */
 	public void writeToFile(String filename) {
 		String[] categoryImgLocs = home.getImageLocs();
-		for(String loc : categoryImgLocs) { 
-			try (PrintWriter writer = new PrintWriter(new FileWriter(filename))){
+		try (PrintWriter writer = new PrintWriter(new FileWriter(filename))){
+			for(String loc : categoryImgLocs) { 
 				AACCategory category = this.categories.get(home.select(loc));
 				writer.println(loc + " " + category.getCategory());
 				for(String itemLoc : category.getImageLocs()) {
 					writer.println(">" + itemLoc + " " + category.select(itemLoc));
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
