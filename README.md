@@ -8,4 +8,4 @@ Authors
 
 Acknowledgement
 
-The original template by catiembaker can be found at <https://github.com/catiembaker/AACNestedHW>
+The original template by catiembaker can be found at <https://github.com/catiembaker/AACNestedHW>. The code can be found at <https://github.com/HandsomeSB/AACNestedHW>
