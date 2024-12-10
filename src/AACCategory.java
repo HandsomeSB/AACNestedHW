@@ -5,7 +5,7 @@ import edu.grinnell.csc207.util.AssociativeArray;
  * Represents the mappings for a single category of items that should
  * be displayed
  * 
- * @author Catie Baker & YOUR NAME HERE
+ * @author Catie Baker & Harrison Zhu
  *
  */
 public class AACCategory implements AACPage {
